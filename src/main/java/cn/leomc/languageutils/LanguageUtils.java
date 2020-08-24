@@ -34,13 +34,13 @@ public class LanguageUtils extends JavaPlugin {
 
     public static String getMessage(Plugin plugin, Language language, String key, Language fallBackLanguage) {
         if(!LANGUAGE_FOLDERS.containsKey(plugin))
-            return "Plugin " + plugin.getName() + " Not Registered! Please Register First!";
+            return "Plugin " + plugin.getName() + " is Not Registered! Please Register First!";
         PluginLanguageProvider pluginLanguageProvider = LANGUAGE_FOLDERS.get(plugin);
-        HashMap<String, Object> langMap = pluginLanguageProvider.getLanguageFileType().parse(language.getLanguageFile(pluginLanguageProvider.getLanguageFolder()));
+        HashMap<String, Object> langMap = pluginLanguageProvider.getLanguageFileType().parse(language.getLanguageFile(pluginLanguageProvider));
         if(langMap.containsKey(key))
             return (String) langMap.get(key);
 
-        langMap = pluginLanguageProvider.getLanguageFileType().parse(fallBackLanguage.getLanguageFile(pluginLanguageProvider.getLanguageFolder()));
+        langMap = pluginLanguageProvider.getLanguageFileType().parse(fallBackLanguage.getLanguageFile(pluginLanguageProvider));
 
         if(langMap.containsKey(key))
             return (String) langMap.get(key);

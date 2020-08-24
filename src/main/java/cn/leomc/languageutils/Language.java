@@ -14,7 +14,7 @@ public class Language {
     }
 
     public Language(String language) {
-        this.language = Locale.forLanguageTag(language);
+        this(Locale.forLanguageTag(language));
     }
 
     public static Language fromPlayer(Player player) {
@@ -33,8 +33,8 @@ public class Language {
         this.language = Locale.forLanguageTag(language);
     }
 
-    public File getLanguageFile(File languageFolder) {
-        return new File(languageFolder, language.toString().toLowerCase() + ".yml");
+    public File getLanguageFile(PluginLanguageProvider pluginLanguageProvider) {
+        return new File(pluginLanguageProvider.getLanguageFolder(), language.toString().toLowerCase() + pluginLanguageProvider.getLanguageFileType().getExtension());
     }
 
 

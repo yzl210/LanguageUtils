@@ -4,19 +4,24 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public enum LanguageFileType {
 
-    YAML("yml", "yaml"),
+    YAML("yml"),
     JSON(".json"),
     LANG(".lang"),
     PROPERTIES(".properties");
 
 
-    LanguageFileType(String... extensions){
+    private final String extension;
 
+    LanguageFileType(String extension){
+        this.extension = extension;
+    }
+
+
+    public String getExtension() {
+        return extension;
     }
 
     public HashMap<String, Object> parse(File file){
