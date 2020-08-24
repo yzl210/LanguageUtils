@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class LanguageUtils extends JavaPlugin {
 
-    private static final HashMap<Plugin, File> LANGUAGE_FOLDERS = new HashMap<>();
+    private static final HashMap<Plugin, PluginLanguageProvider> LANGUAGE_FOLDERS = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -24,30 +24,27 @@ public class LanguageUtils extends JavaPlugin {
     }
 
 
-    public static void register(Plugin plugin, File languageFolder) {
-        LANGUAGE_FOLDERS.put(plugin, languageFolder);
+    public static void register(Plugin plugin, PluginLanguageProvider pluginLanguageProvider) {
+        LANGUAGE_FOLDERS.put(plugin, pluginLanguageProvider);
     }
 
-    public static HashMap<Plugin, File> getLanguageFolders() {
+    public static HashMap<Plugin, PluginLanguageProvider> getLanguageFolders() {
         return LANGUAGE_FOLDERS;
     }
 
     public static String getMessage(Plugin plugin, Language language, String key, Language fallBackLanguage) {
         if(!LANGUAGE_FOLDERS.containsKey(plugin))
-            return "Plugin Not Registered! Please Register First!";
-        File langFolder = LANGUAGE_FOLDERS.get(plugin);
-        try {
-            YamlConfiguration yamlConfiguration = new YamlConfiguration();
-            yamlConfiguration.load(language.getLanguageFile(langFolder));
-            if (yamlConfiguration.contains(key))
-                return yamlConfiguration.getString(key);
-            else
-                throw new InvalidConfigurationException("Cannot find key: " + key);
-        } catch (InvalidConfigurationException | IOException e) {
-            YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(fallBackLanguage.getLanguageFile(langFolder));
-            if (yamlConfiguration.contains(key))
-                return yamlConfiguration.getString(key);
-        }
+            return "Plugin " + plugin.getName() + " Not Registered! Please Register First!";
+        PluginLanguageProvider pluginLanguageProvider = LANGUAGE_FOLDERS.get(plugin);
+        HashMap<String, Object> langMap = pluginLanguageProvider.getLanguageFileType().parse(language.getLanguageFile(pluginLanguageProvider.getLanguageFolder()));
+        if(langMap.containsKey(key))
+            return (String) langMap.get(key);
+
+        langMap = pluginLanguageProvider.getLanguageFileType().parse(fallBackLanguage.getLanguageFile(pluginLanguageProvider.getLanguageFolder()));
+
+        if(langMap.containsKey(key))
+            return (String) langMap.get(key);
+
         return null;
     }
 
