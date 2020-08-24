@@ -1,5 +1,5 @@
 name: LanguageUtils
 main: cn.leomc.languageutils.LanguageUtils
 version: "1.0"
-author: 6LeoMC
+author: LeoMC
 load: STARTUP
