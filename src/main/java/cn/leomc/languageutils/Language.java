@@ -14,7 +14,7 @@ public class Language {
     }
 
     public Language(String language) {
-        this(Locale.forLanguageTag(language));
+        this(Locale.forLanguageTag(language.replace("_", "-")));
     }
 
     public static Language fromPlayer(Player player) {
@@ -30,13 +30,12 @@ public class Language {
     }
 
     public void setLanguage(String language) {
-        this.language = Locale.forLanguageTag(language);
+        this.language = Locale.forLanguageTag(language.replace("_", "-"));
     }
 
     public File getLanguageFile(PluginLanguageProvider pluginLanguageProvider) {
         return new File(pluginLanguageProvider.getLanguageFolder(), language.toString().toLowerCase() + pluginLanguageProvider.getLanguageFileType().getExtension());
     }
-
 
 
 }

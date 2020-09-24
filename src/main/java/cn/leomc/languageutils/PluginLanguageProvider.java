@@ -7,7 +7,7 @@ public class PluginLanguageProvider {
     private File languageFolder;
     private LanguageFileType languageFileType;
 
-    public PluginLanguageProvider(File languageFolder, LanguageFileType languageFileType){
+    public PluginLanguageProvider(File languageFolder, LanguageFileType languageFileType) {
         this.languageFolder = languageFolder;
         this.languageFileType = languageFileType;
     }
@@ -16,15 +16,15 @@ public class PluginLanguageProvider {
         return languageFolder;
     }
 
+    public void setLanguageFolder(File languageFolder) {
+        this.languageFolder = languageFolder;
+    }
+
     public LanguageFileType getLanguageFileType() {
         return languageFileType;
     }
 
     public void setLanguageFileType(LanguageFileType languageFileType) {
         this.languageFileType = languageFileType;
-    }
-
-    public void setLanguageFolder(File languageFolder) {
-        this.languageFolder = languageFolder;
     }
 }
